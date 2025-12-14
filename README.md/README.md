@@ -22,6 +22,16 @@ and view real-time price updates without refreshing the page.
    git clone https://github.com/<yourusername>/stock-broker-dashboard.git
    cd stock-broker-dashboard
 
+or
+
+## How to Run
+### 🌐 Demo
+This project runs locally using Flask.  
+To view the working demo:
+1. Clone the repo  
+2. Run `python app.py`  
+3. Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser
+
 
 Install dependencies:
 
