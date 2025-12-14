@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Broker Client Web Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f3f4f6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 12px;
+        }
+        button:disabled {
+            background: #9ca3af;
+            cursor: default;
+        }
+        .stocks-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            margin-top: 10px;
+        }
+        .stock-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        th {
+            background: #f9fafb;
+        }
+        .pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 12px;
+            margin-right: 6px;
+        }
+        .small {
+            font-size: 13px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Stock Broker Client Web Dashboard</h1>
+
+    <!-- Login card -->
+    <div id="loginCard" class="card">
+        <h2>Login</h2>
+        <p class="small">Enter your email to login to the dashboard.</p>
+        <label for="emailInput">Email</label>
+        <input id="emailInput" type="email" placeholder="you@example.com">
+        <button id="loginBtn">Login</button>
+    </div>
+
+    <!-- Subscription card -->
+    <div id="subscribeCard" class="card hidden">
+        <h2>Subscribe to Stocks</h2>
+        <p class="small">
+            Logged in as <span id="userEmail" style="font-weight: 600;"></span>
+        </p>
+        <p class="small">Choose one or more supported stocks:</p>
+        <div class="stocks-list" id="stocksList">
+            {% for s in stocks %}
+            <label class="stock-chip">
+                <input type="checkbox" value="{{ s }}"> {{ s }}
+            </label>
+            {% endfor %}
+        </div>
+        <button id="startBtn">Start Dashboard</button>
+    </div>
+
+    <!-- Dashboard card -->
+    <div id="dashboardCard" class="card hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <h2 style="margin-bottom:4px;">Live Prices</h2>
+                <p class="small">
+                    User: <span id="dashEmail"></span><br>
+                    Subscribed stocks:
+                    <span id="subscribedPills"></span>
+                </p>
+            </div>
+            <div>
+                <button id="changeStocksBtn" style="background:#6b7280;">Change Stocks</button>
+            </div>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>Stock</th>
+                <th>Current Price (₹)</th>
+                <th>Last Updated</th>
+            </tr>
+            </thead>
+            <tbody id="pricesBody">
+            <!-- rows inserted by JS -->
+            </tbody>
+        </table>
+        <p class="small" style="margin-top:10px;">
+            Note: Prices are randomly generated every second to simulate a live market feed.
+        </p>
+    </div>
+
+</div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="static/main.js"></script>
+
+</body>
+</html>
